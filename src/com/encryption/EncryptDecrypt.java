@@ -16,7 +16,9 @@ public class EncryptDecrypt {
 
 	// method to take in a regular String and return an encrypted String
 	public static String encrypt(String messageToBeEncrypted) {
-		int SHIFT = (int) (Math.random() * 10) + 1;
+		int SHIFT = (int) (Math.random() * 10) + 1; // sets shift for the
+													// encryption to a random
+													// number between 0-10
 		String steppedMessage = null;
 		String encryptedMessage = null;
 		StringBuilder sb = new StringBuilder(messageToBeEncrypted);

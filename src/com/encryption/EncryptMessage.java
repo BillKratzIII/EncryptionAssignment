@@ -1,8 +1,7 @@
 package com.encryption;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
+import java.nio.file.*;
 import java.util.Scanner;
 
 public class EncryptMessage {
@@ -16,6 +15,12 @@ public class EncryptMessage {
 		String encryptedMessage = null;
 		String decryptedMessage = null;
 		Scanner sc = new Scanner(System.in);
+		Path toBeEncryptedPath = Paths.get("\\Users\\admin\\newWorkspace\\EncryptionAssignment\\toBeEncrypted.txt");
+		File toBeEncryptedFile = toBeEncryptedPath.toFile();
+		Path toBeDecryptedPath = Paths.get("\\Users\\admin\\newWorkspace\\EncryptionAssignment\\toBeDecrypted.txt");
+		File toBeDecryptedFile = toBeDecryptedPath.toFile();
+		Path newPath = Paths.get("\\Users\\admin\\newWorkspace\\EncryptionAssignment\\newFile.txt");
+		File newFile = newPath.toFile();
 
 		// do while loop to keep program running until users asks to exit
 		do {
@@ -39,7 +44,16 @@ public class EncryptMessage {
 				System.out.println();
 				break;
 			case "2":
-				// encrypt to from file
+				try (BufferedReader in = new BufferedReader(new FileReader(toBeEncryptedFile))) {
+					String toBeEncrypted;
+					while ((toBeEncrypted = in.readLine()) != null) {
+						encryptedMessage = EncryptDecrypt.encrypt(toBeEncrypted);
+						System.out.println(encryptedMessage);
+					}
+					System.out.println();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case "3":
@@ -54,6 +68,11 @@ public class EncryptMessage {
 
 			case "4":
 				// save to file
+				try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(newFile)))) {
+					out.println(encryptedMessage);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case "5":
@@ -65,7 +84,16 @@ public class EncryptMessage {
 				break;
 
 			case "6":
-				// decrypt from file
+				try (BufferedReader in = new BufferedReader(new FileReader(toBeDecryptedFile))) {
+					String toBeDecrypted;
+					while ((toBeDecrypted = in.readLine()) != null) {
+						decryptedMessage = EncryptDecrypt.decrypt(toBeDecrypted);
+						System.out.println(decryptedMessage);
+					}
+					System.out.println();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case "7":
